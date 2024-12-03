@@ -29,26 +29,18 @@ func close(f *os.File) {
 	}
 }
 
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+
+	return x
+}
+
 func main() {
-	args := os.Args[1:]
-
-	if len(args) != 1 {
-		fmt.Println("Incorrect usage.")
-		os.Exit(1)
-	}
-
-	day, err := strconv.Atoi(args[0])
-	dayString := fmt.Sprintf("%02d", day)
-	filepath := "./data/day" + dayString + ".txt"
-
-	if err != nil || day < 0 {
-		fmt.Println("Invalid day.")
-	}
-
-	f := read(filepath)
+	f := read("data/day01.txt")
 	defer close(f)
 
-	// Day 01:
 	var leftList []int
 	var rightList []int
 	var difference int
@@ -79,7 +71,7 @@ func main() {
 	}
 
 	for i, elem := range leftList {
-		difference += Abs(elem - rightList[i])
+		difference += abs(elem - rightList[i])
 		similarityScore += elem * rightListCount[elem]
 	}
 
